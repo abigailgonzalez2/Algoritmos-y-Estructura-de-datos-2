@@ -1,0 +1,121 @@
+## Clase Nodo.java
+public class Nodo {
+
+    protected Object dato;
+    protected Nodo izdo;
+    protected Nodo dcho;
+
+    // Constructor para nodo hoja
+    public Nodo(Object valor) {
+        dato = valor;
+        izdo = dcho = null;
+    }
+
+    // Constructor para nodo con hijos
+    public Nodo(Nodo ramaIzdo, Object valor, Nodo ramaDcho) {
+        this(valor);
+        izdo = ramaIzdo;
+        dcho = ramaDcho;
+    }
+
+    public Object valorNodo() {
+        return dato;
+    }
+
+    public Nodo subarbolIzdo() {
+        return izdo;
+    }
+
+    public Nodo subarbolDcho() {
+        return dcho;
+    }
+}
+
+## Clase ArbolBinario.java
+
+public class ArbolBinario {
+
+    protected Nodo raiz;
+
+    // Árbol vacío
+    public ArbolBinario() {
+        raiz = null;
+    }
+
+    // Árbol con raíz
+    public ArbolBinario(Nodo raiz) {
+        this.raiz = raiz;
+    }
+
+    public boolean esVacio() {
+        return raiz == null;
+    }
+
+    public static Nodo nuevoArbol(
+            Nodo ramaIzqda,
+            Object dato,
+            Nodo ramaDrcha) {
+
+        return new Nodo(ramaIzqda, dato, ramaDrcha);
+    }
+
+    // Recorrido Preorden
+    public void preOrden(Nodo r) {
+
+        if (r != null) {
+            System.out.println(r.valorNodo());
+
+            preOrden(r.subarbolIzdo());
+            preOrden(r.subarbolDcho());
+        }
+    }
+}
+
+## Clase Main.java
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Nodo maria, rodrigo, gabriel, abel;
+        Nodo esperanza, mJesus, juan;
+
+        // Hojas
+        maria = ArbolBinario.nuevoArbol(
+                null, "Maria", null);
+
+        rodrigo = ArbolBinario.nuevoArbol(
+                null, "Rodrigo", null);
+
+        gabriel = ArbolBinario.nuevoArbol(
+                null, "Gabriel", null);
+
+        abel = ArbolBinario.nuevoArbol(
+                null, "Abel", null);
+
+        // Subárbol izquierdo
+        esperanza = ArbolBinario.nuevoArbol(
+                maria,
+                "Esperanza",
+                rodrigo);
+
+        // Subárbol derecho
+        mJesus = ArbolBinario.nuevoArbol(
+                gabriel,
+                "M Jesus",
+                abel);
+
+        // Raíz
+        juan = ArbolBinario.nuevoArbol(
+                esperanza,
+                "Juan",
+                mJesus);
+
+        // Crear árbol completo
+        ArbolBinario arbol = new ArbolBinario(juan);
+
+        System.out.println("Recorrido Preorden:");
+
+        arbol.preOrden(juan);
+    }
+}
